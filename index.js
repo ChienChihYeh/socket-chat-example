@@ -35,6 +35,8 @@ io.on("connection", (socket) => {
     io.emit("chat message", msg);
   });
 
+  // TODO: private chat
+  // https://socket.io/docs/v3/emit-cheatsheet/
   // to join the room named 'some room'
   //   socket.join("some room");
 
@@ -42,11 +44,19 @@ io.on("connection", (socket) => {
   //   io.to('some room').emit('hello', 'world');
 
   // broadcast to all other connected clients in the room
-  //   socket.broadcast.to('some-room').emit('chat message', 'hello')
+  //   socket.to('some-room').emit('chat message', 'hello')
 
   // broadcast to all connected clients except those in the room
   // io.except('some room').emit('hello', 'world');
 
+  // WARNING: `socket.to(socket.id).emit()` will NOT work, as it will send to everyone in the room
+  // named `socket.id` but the sender. Please use the classic `socket.emit()` instead.
+  // to individual socketid (private message)
+  // io.to(socketId).emit(/* ... */);
+
   // leave the room
   // socket.leave('some room');
+
+  // TODO: namespaces
+  // https://socket.io/docs/v4/namespaces/
 });
